@@ -38,6 +38,7 @@ export class AppComponent {
       gameNightsSaturday: false,
       recruiting: 'B',
       coed: 'B',
+      maxFee: '',
     });
   }
 
@@ -56,6 +57,8 @@ export class AppComponent {
     criteria.recruiting = this.transalteYNBtoTFM(
       this.searchForm.value.recruiting
     );
+
+    criteria.maxFee = this.searchForm.value.maxFee;
 
     criteria.coed = this.transalteYNBtoTFM(this.searchForm.value.coed);
 
