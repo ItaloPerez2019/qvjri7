@@ -1,35 +1,38 @@
-
 <h1>Team Search</h1>
 
 <div>
-  <button class="btn btn-secondary"
-    (click)="toggleSearchCriteria()"
-    > 
+  <button class="btn btn-secondary" (click)="toggleSearchCriteria()">
     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
     <i class="material-icons" *ngIf="!showCriteria">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="showCriteria">keyboard_arrow_up</i>
-    Search Criteria  
+    Search Criteria
   </button>
-  
-  <div *ngIf="showCriteria" class="search-criteria" style="background-color: #99ccee; padding: 1.5rem">
-    <form>
 
-
+  <div
+    *ngIf="showCriteria"
+    class="search-criteria"
+    style="background-color: #99ccee; padding: 1.5rem"
+  >
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="">Name: </label>
         <div class="col-sm-10">
-          <input  class="form-control">
+          <input class="form-control" formControlName="teamName" />
         </div>
       </div>
 
-
-
       <div class="form-group row">
-
-        <label  class="col-sm-2 col-form-label" for="leaguename">League:</label>
+        <label class="col-sm-2 col-form-label" for="leaguename">League:</label>
         <div class="col-sm-10">
-          <select  name="leaguename" id="leaguename" class="form-control">
-            <option *ngFor="let league of leagues">{{league.name}}</option>
+          <select
+            name="leaguename"
+            id="leaguename"
+            class="form-control"
+            formControlName="leagueId"
+          >
+            <option [ngValue]="league.id" *ngFor="let league of leagues">
+              {{ league.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -37,92 +40,168 @@
       <div class="form-group">
         <label for="">Game Nights:</label>
         <div class="form-check">
-          <input  id="gameNightsMonday" type="checkbox" class="form-check-input">
+          <input
+            formControlName="gameNightsMonday"
+            id="gameNightsMonday"
+            type="checkbox"
+            class="form-check-input"
+          />
           <label class="form-check-label" for="gameNightsMonday"> Monday</label>
         </div>
 
         <div class="form-check">
-          <input  id="gameNightsWednesday"  type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="gameNightsWednesday"> Wednesday</label>
+          <input
+            formControlName="gameNightsWednesday"
+            id="gameNightsWednesday"
+            type="checkbox"
+            class="form-check-input"
+          />
+          <label class="form-check-label" for="gameNightsWednesday">
+            Wednesday</label
+          >
         </div>
 
         <div class="form-check">
-          <input  id="gameNightsThursday"  type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="gameNightsThursday"> Thursday</label>
+          <input
+            formControlName="gameNightsThursday"
+            id="gameNightsThursday"
+            type="checkbox"
+            class="form-check-input"
+          />
+          <label class="form-check-label" for="gameNightsThursday">
+            Thursday</label
+          >
         </div>
 
         <div class="form-check">
-          <input  id="gameNightsFriday"  type="checkbox" class="form-check-input">
+          <input
+            formControlName="gameNightsfriday"
+            id="gameNightsFriday"
+            type="checkbox"
+            class="form-check-input"
+          />
           <label class="form-check-label" for="gameNightsFriday"> Friday</label>
         </div>
 
         <div class="form-check">
-          <input  id="gameNightsSaturday"  type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="gameNightsSaturday"> Saturday</label>
+          <input
+            formControlName="gameNightsSaturday"
+            id="gameNightsSaturday"
+            type="checkbox"
+            class="form-check-input"
+          />
+          <label class="form-check-label" for="gameNightsSaturday">
+            Saturday</label
+          >
         </div>
       </div>
 
       <div class="form-group">
-      <label>Recruiting:</label><br>
+        <label>Recruiting:</label><br />
 
-      <div class="form-check form-check-inline">
-        <input class="form-check-input"  name="recruiting" id="recruitingYes" type="radio"> <label for="recruitingYes" class="form-check-label"> Yes </label>
-      </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            name="recruiting"
+            id="recruitingYes"
+            type="radio"
+          />
+          <label for="recruitingYes" class="form-check-label"> Yes </label>
+        </div>
 
-      <div class="form-check form-check-inline">
-        <input class="form-check-input"  name="recruiting" id="recruitingNo" type="radio"> <label for="recruitingNo" class="form-check-label"> No </label>
-      </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            name="recruiting"
+            id="recruitingNo"
+            type="radio"
+          />
+          <label for="recruitingNo" class="form-check-label"> No </label>
+        </div>
 
-      <div class="form-check form-check-inline">
-        <input class="form-check-input"  name="recruiting" id="recruitingBoth" type="radio"> <label for="recruitingBoth" class="form-check-label"> Both </label>
-      </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            name="recruiting"
+            id="recruitingBoth"
+            type="radio"
+          />
+          <label for="recruitingBoth" class="form-check-label"> Both </label>
+        </div>
       </div>
 
       <div class="form-group">
-        <label>CoEd:</label><br>
+        <label>CoEd:</label><br />
         <div class="form-check form-check-inline">
-          <input type="radio" name="coed" id="coedYes" class="form-check-input"> <label for="coedYes" class="form-check-label">Yes </label>
+          <input
+            type="radio"
+            name="coed"
+            id="coedYes"
+            class="form-check-input"
+          />
+          <label for="coedYes" class="form-check-label">Yes </label>
         </div>
         <div class="form-check form-check-inline">
-          <input type="radio" name="coed" id="coedNo" class="form-check-input"> <label for="coedNo" class="form-check-label">No </label>
+          <input
+            type="radio"
+            name="coed"
+            id="coedNo"
+            class="form-check-input"
+          />
+          <label for="coedNo" class="form-check-label">No </label>
         </div>
         <div class="form-check form-check-inline">
-          <input type="radio" name="coed" id="coedBoth" class="form-check-input"> <label for="coedBoth" class="form-check-label">Both </label>
+          <input
+            type="radio"
+            name="coed"
+            id="coedBoth"
+            class="form-check-input"
+          />
+          <label for="coedBoth" class="form-check-label">Both </label>
         </div>
       </div>
 
       <div class="form-group">
         <label>Maximum Fee (leave blank for no max):</label>
-        <input type="text"  class="form-control">
+        <input type="text" class="form-control" />
       </div>
 
       <div class="form-group">
-          <label>Record:</label>
+        <label>Record:</label>
         <div class="form-check">
-          <input type="checkbox"  id="recordWinning" class="form-check-input"><label class="form-check-label" for="recordWinning"> Winning</label>
+          <input
+            type="checkbox"
+            id="recordWinning"
+            class="form-check-input"
+          /><label class="form-check-label" for="recordWinning"> Winning</label>
         </div>
         <div class="form-check">
-          <input type="checkbox"  id="recordLosing" class="form-check-input"><label class="form-check-label" for="recordLosing"> Losing</label>
+          <input
+            type="checkbox"
+            id="recordLosing"
+            class="form-check-input"
+          /><label class="form-check-label" for="recordLosing"> Losing</label>
         </div>
         <div class="form-check">
-          <input type="checkbox"  id="recordUndefeated" class="form-check-input"><label class="form-check-label" for="recordUndefeated"> Undefeated</label>
+          <input
+            type="checkbox"
+            id="recordUndefeated"
+            class="form-check-input"
+          /><label class="form-check-label" for="recordUndefeated">
+            Undefeated</label
+          >
         </div>
       </div>
 
       <button type="submit" class="btn btn-primary">Search</button>
-
     </form>
-
   </div>
-
 </div>
 
 <h3>Results</h3>
 
 <div class="results" style="">
-
   <table class="table-auto">
-
     <thead>
       <th>Name</th>
       <th>League</th>
@@ -134,21 +213,21 @@
       <th>Record</th>
     </thead>
 
-    <tr *ngFor="let team of results; let e = even" [class.bg-light]="e" >
-      <td class="px-2 py-1">{{team.name}}</td>
-      <td class="px-2 py-1">{{team.league.name}}</td>
-      <td class="px-2 py-1">{{team.league.gameNights}}</td>
+    <tr *ngFor="let team of results; let e = even" [class.bg-light]="e">
+      <td class="px-2 py-1">{{ team.name }}</td>
+      <td class="px-2 py-1">{{ team.league.name }}</td>
+      <td class="px-2 py-1">{{ team.league.gameNights }}</td>
       <td class="px-2 py-1 text-center">
         <i *ngIf="team.league.coed" class="material-icons">done</i>
       </td>
-      <td class="px-2 py-1 text-right">{{team.fee | currency:'USD':'symbol':'1.0-0'}}</td>
+      <td class="px-2 py-1 text-right">
+        {{ team.fee | currency: 'USD':'symbol':'1.0-0' }}
+      </td>
       <td class="px-2 py-1 text-center">
         <i *ngIf="team.recruiting" class="material-icons">done</i>
       </td>
-      <td class="px-2 py-1">{{team.positionsNeeded}}</td>
-      <td class="px-2 py-1">{{team.record.wins}}-{{team.record.losses}}</td>
+      <td class="px-2 py-1">{{ team.positionsNeeded }}</td>
+      <td class="px-2 py-1">{{ team.record.wins }}-{{ team.record.losses }}</td>
     </tr>
-
   </table>
-
 </div>
