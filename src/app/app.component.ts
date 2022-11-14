@@ -36,6 +36,8 @@ export class AppComponent {
       gameNightsThursday: false,
       gameNightsfriday: false,
       gameNightsSaturday: false,
+      recruiting: 'B',
+      coed: 'B',
     });
   }
 
@@ -51,10 +53,13 @@ export class AppComponent {
 
     criteria.gameNights = this.getGameNightsCriteria();
 
-    console.log(this.searchForm.value.leagueId);
+    criteria.recruiting = this.transalteYNBtoTFM(
+      this.searchForm.value.recruiting
+    );
+
+    criteria.coed = this.transalteYNBtoTFM(this.searchForm.value.coed);
 
     this.teamService.searchTeams(criteria).subscribe((teams) => {
-      console.log('search');
       this.results = teams;
     });
   }
@@ -67,6 +72,12 @@ export class AppComponent {
     if (this.searchForm.value.gameNightsFriday) gameNights.push('F');
     if (this.searchForm.value.gameNightsSaturday) gameNights.push('S');
     return gameNights.join('');
+  }
+
+  transalteYNBtoTFM(value) {
+    if (value === 'Y') return true;
+    if (value === 'N') return false;
+    if (value === 'B') return null;
   }
 
   toggleSearchCriteria() {
